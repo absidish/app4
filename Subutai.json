@@ -8,7 +8,15 @@
             "hostname": "${containerName}",
             "template": "debian-stretch",
             "peer-criteria": "PEER-GROUP",
-            "size": "${containerSize}"
+            "size": "${containerSize}",
+                "port-mapping": [
+                {
+                    "protocol": "http",
+                    "domain": "${domainName}",
+                    "internal-port": "80",
+                    "external-port": "80"
+                }
+            ]
         }
     ],
     "peer-criteria": [
