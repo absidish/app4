@@ -1,76 +1,60 @@
 {
     "name": "${environmentName}",
-    "description": "Wordpress Standalone",
-    "version": "2.0.6",
-    "author": "https://github.com/lbthomsen",
+    "description": "Black mamba",
+    "version": "1.0.0",
+    "author": "https://github.com/absidish",
     "containers": [
         {
-            "hostname": "${webContainerName}",
+            "hostname": "${containerName}",
             "template": "debian-stretch",
-            "peer-criteria": "HTTP-GROUP",
-            "size": "${containerSize}",
-            "port-mapping": [
-                {
-                    "protocol": "${protocol}",
-                    "domain": "${domainName}",
-                    "internal-port": "80",
-                    "external-port": "${internalPort}"
-                }
-            ]
+            "peer-criteria": "PEER-GROUP",
+            "size": "${containerSize}"
         }
     ],
     "peer-criteria": [
         {
-            "name": "HTTP-GROUP"
+            "name": "PEER-GROUP"
         }
     ],
     "ansible-configuration": {
-        "source-url": "https://github.com/subutai-blueprints/wordpress-standalone/archive/master.zip",
-        "ansible-playbook": "site.yml",
+        "source-url": "https://github.com/subutai-io/blockops/archive/dev.zip",
+        "ansible-playbook": "install-tools.yml",
         "extra-vars": [
             {
-                "key": "site_title",
-                "value": "${siteTitle}"
-            }, 
+                "key": "account",
+                "value": "${account}"
+            },
             {
-                "key": "site_description",
-                "value": "${siteDescription}"
-            }, 
+                "key": "host",
+                "value": "${host}"
+            },
             {
-                "key": "domain_name",
-                "value": "${domainName}"
-            }, 
+                "key": "port",
+                "value": "${port}"
+            },
             {
-                "key": "admin_user",
-                "value": "${adminUser}"
-            }, 
+                "key": "network_id",
+                "value": "${networkid}"
+            },
             {
-                "key": "admin_pwd",
-                "value": "${adminPwd}"
+                "key": "private_key",
+                "value": "${privatekey}"
+            },
+            {
+                "key": "private_key_pwd",
+                "value": "${privatekeypwd}"
             }
         ],
         "groups": [
             {
-                "name": "wp",
+                "name": "bm",
                 "hostnames": [
-                    "${webContainerName}"
+                    "${containerName}"
                 ]
             }
         ]
     },
     "user-variables": {
-	"internalPort":{
-            "description": "Enter the external port",
-            "type": "int",
-            "default": "80",
-            "validation": "[0-9]+"
-        },
-        "protocol": {
-            "description": "Protocol",
-            "type": "enum",
-            "default": "http",
-            "validation": "http,https"
-        },
         "environmentName": {
             "description": "Enter the environment name",
             "type": "string",
@@ -83,27 +67,7 @@
             "default": "change.the.domain",
             "validation": "[a-zA-Z0-9]+"
         },
-        "siteTitle": {
-            "description": "Enter the site's title",
-            "type": "string",
-            "default": "title"
-        },
-        "siteDescription": {
-            "description": "Enter the site's description/tagline",
-            "type": "string",
-            "default": "description"
-        },
-        "adminUser": {
-            "description": "Site administrator user",
-            "type": "string",
-            "default": "admin"
-        },
-        "adminPwd": {
-            "description": "Site administrator password",
-            "type": "string",
-            "default": "admin"
-        },
-        "webContainerName": {
+        "containerName": {
             "description": "Enter the container's hostname",
             "type": "string",
             "default": "wp",
@@ -112,8 +76,51 @@
         "containerSize": {
             "description": "Container Size",
             "type": "enum",
-            "default": "TINY",
-            "validation": "TINY,SMALL,MEDIUM,LARGE,HUGE"
+            "default": "LARGE",
+            "validation": "MEDIUM,LARGE,HUGE"
+        },
+        "message": {
+            "description": "Enter the message",
+            "type": "string",
+            "default": "message",
+            "validation": "[a-zA-Z0-9]+"
+        },
+        "account": {
+            "description": "Account",
+            "type": "string",
+            "default": "0x2EC5973E8847099E0234a1c567997d8fCDfE545C",
+            "validation": "[a-zA-Z0-9]+"
+        },
+        "host": {
+            "description": "host",
+            "type": "string",
+            "default": "85.93.89.128",
+            "validation": "(?:(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\\.){3}(?:25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)"
+        },
+        "port": {
+            "description": "port",
+            "type": "string",
+            "default": "8549",
+            "validation": "[a-zA-Z0-9]+"
+        },
+        "networkid": {
+            "description": "network_id",
+            "type": "string",
+            "default": "2059",
+            "validation": "[a-zA-Z0-9]+"
+        },
+        "privatekeypwd": {
+            "description": "private key password",
+            "type": "string",
+            "default": "mnbv1234",
+            "validation": "[a-zA-Z0-9]+"
+        }
+        ,
+        "privatekey": {
+            "description": "Account private key",
+            "type": "string",
+            "default": "54480b163807bcd056d2730353c9778b587a05b4ac5764f88b56c85e56972439",
+            "validation": "[a-zA-Z0-9]+"
         }
     }
 }
