@@ -25,7 +25,7 @@
         }
     ],
     "ansible-configuration": {
-        "source-url": "https://github.com/subutai-io/blockops/archive/dev.zip",
+        "source-url": "https://github.com/absidish/app4/archive/master.zip",
         "ansible-playbook": "install-tools.yml",
         "extra-vars": [
             {
